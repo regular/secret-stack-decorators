@@ -8,6 +8,8 @@ _TypeScript or Babel decorators that make it possible to write secret-stack plug
 npm install --save secret-stack-decorators
 ```
 
+**Only supports secret-stack >=6.2.0**
+
 In your TypeScript or Babel codebase, **import `plugin` and `muxrpc`**:
 
 ```typescript
