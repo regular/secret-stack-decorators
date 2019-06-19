@@ -101,7 +101,7 @@ Important: the name of the class is used as a string to register the plugin. `cl
 
 ### `@muxrpc(manifestType: string, permission?: object)`
 
-This decorator should be placed on this-bound class methods that are meant to be used as muxrpc APIs. The `manifestType` argument is a string, should have the value `sync` or `async` or `source` or `sink` or `duplex. The optional `permission` object should have the shape `{role: 'allow' | 'deny'}`, i.e., the object's keys are names of roles (such as `anonymous` or `master`, etc), and the value can be either the string `'allow'` or the string `'deny'`.
+This decorator should be placed on this-bound class methods that are meant to be used as muxrpc APIs. The `manifestType` argument is a string, should have the value `'sync'` or `'async'` or `'source'` or `'sink'` or `'duplex'`. The optional `permission` object should have the shape `{role: 'allow' | 'deny'}`, i.e., the object's keys are names of roles (such as `anonymous` or `master`, etc), and the value can be either the string `'allow'` or the string `'deny'`.
 
 Note that this decorator can only be used on this-bound methods. For instance:
 
