@@ -1,6 +1,6 @@
 # secret-stack-decorators
 
-_TypeScript or Babel decorators that make it possible to write secret-stack plugins in OOP style_
+_TypeScript or Babel decorators that make it possible to write [secret-stack](https://github.com/ssbc/secret-stack) plugins in OOP style_
 
 ## Usage
 
