@@ -32,7 +32,7 @@ class myplugin /* name */ {
   }
 
   @muxrpc('duplex', {anonymous: 'allow'}) /* manifest and permissions */
-  communicate = () => {
+  communicate() {
     // ...
   }
 }
@@ -80,16 +80,16 @@ class ebt {
   }
 
   @muxrpc('duplex', {anonymous: 'allow'})
-  replicate = (opts) => { /* ... */ }
+  replicate(opts) { /* ... */ }
 
   @muxrpc('sync')
-  request = (id, other) => { /* ... */ }
+  request(id, other) { /* ... */ }
 
   @muxrpc('sync')
-  block = (id) => { /* ... */ }
+  block(id) { /* ... */ }
 
   @muxrpc('sync')
-  peerStatus = (id) => { /* ... */ }
+  peerStatus(id) { /* ... */ }
 }
 ```
 
@@ -103,37 +103,7 @@ Important: the name of the class is used as a string to register the plugin. `cl
 
 ### `@muxrpc(manifestType: string, permission?: object)`
 
-This decorator should be placed on this-bound class methods that are meant to be used as muxrpc APIs. The `manifestType` argument is a string, should have the value `'sync'` or `'async'` or `'source'` or `'sink'` or `'duplex'`. The optional `permission` object should have the shape `{role: 'allow' | 'deny'}`, i.e., the object's keys are names of roles (such as `anonymous` or `master`, etc), and the value can be either the string `'allow'` or the string `'deny'`.
-
-Note that this decorator can only be used on this-bound methods. For instance:
-
-**Incorrect:**
-
-```js
-@muxrpc('async')
-myMethod(x) {
-  // ...
-}
-```
-
-**Correct:**
-
-```js
-@muxrpc('async')
-myMethod = (x) => {
-  // ...
-}
-```
-
-The difference is:
-
-```diff
- @muxrpc('async')
--myMethod(x) {
-+myMethod = (x) => {
-   // ...
- }
-```
+The `manifestType` argument is a string, should have the value `'sync'` or `'async'` or `'source'` or `'sink'` or `'duplex'`. The optional `permission` object should have the shape `{role: 'allow' | 'deny'}`, i.e., the object's keys are names of roles (such as `anonymous` or `master`, etc), and the value can be either the string `'allow'` or the string `'deny'`.
 
 ## License
 
