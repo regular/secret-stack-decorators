@@ -14,21 +14,6 @@ export function muxrpc(type: MuxRpcOutputTypes, perms?: MuxRpcPermissions) {
           '`?',
       );
     }
-    if (
-      target[methodName] &&
-      typeof target[methodName] === 'function' &&
-      target[methodName].name === methodName
-    ) {
-      throw new Error(
-        'You can only use the @muxrpc decorator on "this-bound" methods, ' +
-          'are you sure that is the case for the `' +
-          methodName +
-          '` method in your class?\n' +
-          '\nINCORRECT: `myMethod(x) {`' +
-          '\n  CORRECT: `myMethod = (x) => {`' +
-          '\n',
-      );
-    }
 
     // Augment the 'manifest' static field
     if (!statics.manifest) {
@@ -74,11 +59,16 @@ export function plugin(version: string) {
       // those declared in the manifest
       for (var property in api) {
         if (property in constructor.manifest) {
+          let propertyValue = api[property];
+          if (typeof propertyValue === 'function' && !Object.getOwnPropertyDescriptors(api)[property]) {
+            // not a this-bound method, bind it
+            propertyValue = propertyValue.bind(api)
+          }
           Object.defineProperty(api, property, {
             enumerable: true,
             configurable: false,
             writable: true,
-            value: api[property],
+            value: propertyValue,
           });
         } else {
           Object.defineProperty(api, property, {
