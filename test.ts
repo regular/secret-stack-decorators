@@ -1,9 +1,9 @@
 const test = require('tape');
 const SecretStack = require('secret-stack');
-import {plugin, muxrpc} from './index';
+import {plugin, muxrpc, local} from './index';
 
 test('can create a class-based plugin for secret-stack', (t: any) => {
-  t.plan(9);
+  t.plan(10);
 
   @plugin('1.2.3')
   class database {
@@ -30,6 +30,11 @@ test('can create a class-based plugin for secret-stack', (t: any) => {
       return this.api;
     };
 
+    @local()
+    public getLocalAPI() {
+      return this.api;
+    };
+
   }
 
   var App = SecretStack({
@@ -43,6 +48,7 @@ test('can create a class-based plugin for secret-stack', (t: any) => {
   t.equals(app.database.store(2), 20, 'our plugin method works as expected');
   t.equals(app.database.getAPI(), app, 'our plugin instance method is running in correct context');
   t.equals(app.database.getAPI2(), app, 'our plugin prototype method is running in correct context');
+  t.equals(app.database.getLocalAPI(), app, 'our @local plugin prototype method is running in correct context');
   t.equals(app.database.api, undefined, 'our plugin private attribute is hidden');
 
   const manifest = app.getManifest()
