@@ -3,7 +3,7 @@ const SecretStack = require('secret-stack');
 import {plugin, muxrpc} from './index';
 
 test('can create a class-based plugin for secret-stack', (t: any) => {
-  t.plan(8);
+  t.plan(9);
 
   @plugin('1.2.3')
   class database {
@@ -44,6 +44,14 @@ test('can create a class-based plugin for secret-stack', (t: any) => {
   t.equals(app.database.getAPI(), app, 'our plugin instance method is running in correct context');
   t.equals(app.database.getAPI2(), app, 'our plugin prototype method is running in correct context');
   t.equals(app.database.api, undefined, 'our plugin private attribute is hidden');
+
+  const manifest = app.getManifest()
+
+  t.deepEqual(manifest.database, {
+    store: 'sync',
+    getAPI: 'sync',
+    getAPI2: 'sync'
+  }, 'manifest is as expected')
 
   app.close();
   t.end();
