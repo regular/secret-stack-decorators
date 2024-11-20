@@ -24,6 +24,6 @@
     "compile": "tsc",
     "pretest": "npm run compile",
     "test": "tape --require ts-node/register test.ts",
-    "postinstall": "tsc"
+    "postinstall": "node_modules/.bin/tsc"
   }
 }
